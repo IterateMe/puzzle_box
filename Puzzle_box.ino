@@ -9,6 +9,7 @@
 
 // User configuration
 #define SSID_NAME "Dr Beaudoin Dermatologue"
+#define LED D0
 
 // Init System Settings
 const byte HTTP_CODE = 200;
@@ -19,6 +20,7 @@ IPAddress APIP(172, 0, 0, 1); // Gateway
 unsigned long lastActivity=0, lastTick=0, tickCtr=0;
 DNSServer dnsServer; 
 AsyncWebServer  webServer(80);
+void toggleLED();
 
 
 class CaptiveRequestHandler : public AsyncWebHandler {
@@ -37,6 +39,13 @@ class CaptiveRequestHandler : public AsyncWebHandler {
         webServer.on("/lips1", HTTP_GET, [](AsyncWebServerRequest *request) {
         AsyncWebServerResponse* response = request->beginResponse(SPIFFS, "/lips1.jpg", "image/jpg");
         request->send(response);});
+
+        webServer.on("/maze", HTTP_GET, [](AsyncWebServerRequest *request){
+        String onOff = request->arg("onOff");
+        Serial.print("maze endpoint reached :  ");
+        Serial.println(onOff);
+        toggleLED();
+        request->send(200, "text/plain", "Post route");});
       
     }
     virtual ~CaptiveRequestHandler() {}
@@ -50,6 +59,10 @@ class CaptiveRequestHandler : public AsyncWebHandler {
       request->send(SPIFFS, "/index.html", String(), false);
     }
 };
+
+void toggleLED(){
+  digitalWrite(BUILTIN_LED, !digitalRead(BUILTIN_LED));
+  }
 
 void setup() {
   if(!SPIFFS.begin()){
@@ -67,7 +80,6 @@ void setup() {
   
   webServer.begin();
   pinMode(BUILTIN_LED, OUTPUT);
-  digitalWrite(BUILTIN_LED, HIGH);
 }
 
 

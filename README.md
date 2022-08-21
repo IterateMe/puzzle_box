@@ -13,4 +13,10 @@ https://randomnerdtutorials.com/display-images-esp32-esp8266-web-server/
   
 https://github.com/me-no-dev/ESPAsyncWebServer  
 https://github.com/me-no-dev/ESPAsyncTCP  
-"# puzzle_box" 
+
+
+## Interactions with web server
+    https://randomnerdtutorials.com/esp32-esp8266-input-data-html-form/
+    https://randomnerdtutorials.com/esp32-esp8266-web-server-physical-button/
+    https://github.com/me-no-dev/ESPAsyncWebServer/blob/master/src/ESPAsyncWebServer.h
+    https://microcontrollerslab.com/esp32-asynchronous-web-server-espasyncwebserver-library/
