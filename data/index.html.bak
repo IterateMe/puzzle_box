@@ -22,8 +22,9 @@
 </head>
 <body>
 	<nav><b>Dr Beaudoin Dermatologue</b>Le Donjon du Dr</nav>
-    <button onclick="window.location.href='/onOff?onOff=0'"> Button </button>
     
+    <p><button id="button" class="button">Toggle</button></p>
+
 	<div class="container">
 		<div class="image">
 			<img src="/maxWchix" alt="Image from ESP8266" width="175" height="140">

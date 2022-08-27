@@ -22,10 +22,10 @@
 </head>
 <body>
 	<nav><b>Dr Beaudoin Dermatologue</b>Le Donjon du Dr</nav>
-    <button onclick="window.location.href='/onOff?onOff=0'"> Button </button>
-    <form action="/onOff?onOff='ON'">
-      <input type="submit" value="Submit">
-    </form>
+    
+    <p class="state">state: <span id="state">%STATE%</span></p>
+    <p><button id="button" class="button">Toggle</button></p>
+
 	<div class="container">
 		<div class="image">
 			<img src="/maxWchix" alt="Image from ESP8266" width="175" height="140">
@@ -71,6 +71,44 @@
 			<p style="font-size: 15px"> Depuis l'arrivée de Dr Beaudoin dans ma vie, mon compte OnlyFan a enfin pu décoller! #gratitude #blessed </p>
 		</div>
 	</div>
-	
+	<script>
+  var gateway = `ws://${window.location.hostname}/ws`;
+  var websocket;
+  window.addEventListener('load', onLoad);
+  function initWebSocket() {
+    console.log('Trying to open a WebSocket connection...');
+    websocket = new WebSocket(gateway);
+    websocket.onopen    = onOpen;
+    websocket.onclose   = onClose;
+    websocket.onmessage = onMessage; // <-- add this line
+  }
+  function onOpen(event) {
+    console.log('Connection opened');
+  }
+  function onClose(event) {
+    console.log('Connection closed');
+    setTimeout(initWebSocket, 2000);
+  }
+  function onMessage(event) {
+    var state;
+    if (event.data == "1"){
+      state = "ON";
+    }
+    else{
+      state = "OFF";
+    }
+    document.getElementById('state').innerHTML = state;
+  }
+  function onLoad(event) {
+    initWebSocket();
+    initButton();
+  }
+  function initButton() {
+    document.getElementById('button').addEventListener('click', toggle);
+  }
+  function toggle(){
+    websocket.send('toggle');
+  }
+</script>
 </body>
 </html>
