@@ -1,4 +1,4 @@
 #include "model.h"
 
-const char* ssid = "";
-const char* password = "";
+const char* ssid = "Adrienne";
+const char* password = "thisAintGood!alicelamalice";

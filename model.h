@@ -5,8 +5,8 @@
 // Data structure of the puzzle box
 namespace model{
   // Connection
-  extern const char* ssid = "Adrienne";
-  extern const char* password = "thisAintGood!alicelamalice";
+  extern const char* ssid;
+  extern const char* password;
   
   // I/O pins
   int LEDPWM1 = D0;
