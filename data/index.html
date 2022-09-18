@@ -1,6 +1,6 @@
 <!DOCTYPE HTML><html>
 <head>
-  <title>ESP Web Server</title>
+  <title>ESP Puzzle box</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
   html {
@@ -63,21 +63,31 @@
      font-weight: bold;
    }
   </style>
-<title>ESP Web Server</title>
+<title>ESP Puzzle box</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="data:,">
 </head>
 <body>
   <div class="topnav">
-    <h1>ESP WebSocket Server</h1>
+    <h1>ESP Puzzle Box</h1>
   </div>
   <div class="content">
     <div class="card">
-      <h2>Output - GPIO 2</h2>
-      <p class="state">state: <span id="state">%STAATE%</span></p>
-      <p><button id="button" class="button">Toggle</button></p>
+      <p class="state">
+        <span id="one">
+            <button id="button" class="button" onClick="activation_On()">Turn me ON</button>
+        </span>
+      </p>
     </div>
   </div>
+<script>
+    function activation_On(){
+        websocket.send('activation_On');
+        document.getElementById('one').innerHTML = "Set the box in the right position";
+    }
+    
+</script>
+  
 <script>
   var gateway = `ws://${window.location.hostname}/ws`;
   var websocket;
@@ -87,7 +97,7 @@
     websocket = new WebSocket(gateway);
     websocket.onopen    = onOpen;
     websocket.onclose   = onClose;
-    websocket.onmessage = onMessage; // <-- add this line
+    websocket.onmessage = onMessage;
   }
   function onOpen(event) {
     console.log('Connection opened');
@@ -97,25 +107,13 @@
     setTimeout(initWebSocket, 2000);
   }
   function onMessage(event) {
-    var state;
-    if (event.data == "1"){
-      state = "ON";
-    }
-    else{
-      state = "OFF";
-    }
-    document.getElementById('state').innerHTML = state;
+    const state = JSON.parse(event.data);
+    document.getElementById('one').innerHTML = state.one;
   }
   function onLoad(event) {
     initWebSocket();
-    initButton();
   }
-  function initButton() {
-    document.getElementById('button').addEventListener('click', toggle);
-  }
-  function toggle(){
-    websocket.send('toggle');
-  }
+
 </script>
 </body>
 </html>

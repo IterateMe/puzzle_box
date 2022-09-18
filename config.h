@@ -1,30 +1,35 @@
-// model
-#ifndef MODEL_H
-#define MODEL_H
+#ifndef CONFIG_H
+#define CONFIG_H
+
+#include <string.h>
 
 // Data structure of the puzzle box
-namespace model{
+namespace configu{
   // Connection
   extern const char* ssid;
   extern const char* password;
   
   // I/O pins
-  int LEDPWM1 = D0;
-  const int ledPin = 2;
-  const int pinInput_1 = 14;
+  extern int LEDPWM1;
+  extern int ledPin;
+  extern int pinInput_1;
   
   // State machine
-  int currentState = 0;
-  bool ledState = 0;
+  extern int currentState;
+  extern bool ledState;
 
-  //GLOBAL
-  bool isOnGoodSide = false;
 
-  //State 1 - Activation
-    // Se connecter au serveur pour activer la machine (LED rouges vont clignoter lentement)
+  //JSON structure
+  extern char* json_start;
+  extern char* json_middle;
+  extern char* json_coma;
+  extern char* json_end;
 
-    // Mettre le cube "droit" pour allumer les LED vertes
+  extern char* json_key_one;
+  extern char* json_key_two;
+  extern char* json_key_three;
 
+    
   //State 2 - Labyrinthe
     // LED eclairent la bonne section du cube
     // L'app web load la page conséquente
@@ -35,8 +40,16 @@ namespace model{
     // LED eclairent la bonne section du cube
     // L'app web load la page conséquente
       // 4 choix avec un menu deroulant proposant des lettres
+    extern char choice1[26];
+    extern char choice2[26];
+    extern char choice3[26];
+    extern char choice4[26];
 
-
+    extern char answer1;
+    extern char answer2;
+    extern char answer3;
+    extern char answer4;
+    
   //State 4 - Sequence d'activation
 
 
